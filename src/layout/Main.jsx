@@ -10,16 +10,24 @@ const Main = () => {
     const [isLoading, setIsLoading] = useState(true)
 
     useEffect(() => {
-        fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&s=matrix`)
+        fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&s=matrix`)
             .then((response) => response.json())
             .then((data) => setMovies(data.Search, setIsLoading(false)))
+            .catch((error) => {
+                console.error(error)
+                setIsLoading(false)
+            })
     }, [])
 
     const searchMovies = (str, type = 'all') => {
         setIsLoading(true)
-        fetch(`http://www.omdbapi.com/?apikey=${API_KEY}&s=${str}${type !== 'all' ? `&type=${type}` : ''}`)
+        fetch(`https://www.omdbapi.com/?apikey=${API_KEY}&s=${str}${type !== 'all' ? `&type=${type}` : ''}`)
             .then((response) => response.json())
             .then((data) => setMovies(data.Search, setIsLoading(false)))
+            .catch((error) => {
+                console.error(error)
+                setIsLoading(false)
+            })
     }
 
     return (
